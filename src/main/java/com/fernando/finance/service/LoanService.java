@@ -9,4 +9,6 @@ public interface LoanService {
     List<LoanResponseDto> get();
     LoanResponseDto save(LoanRequestDto loanRequestDto);
     LoanResponseDto update(int id, LoanRequestDto loanRequestDto);
+
+    LoanResponseDto findOne(Integer id);
 }

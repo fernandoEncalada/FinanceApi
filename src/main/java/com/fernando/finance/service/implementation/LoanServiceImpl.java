@@ -7,12 +7,9 @@ import com.fernando.finance.model.dto.loan.LoanResponseDto;
 import com.fernando.finance.model.repository.LoanRepository;
 import com.fernando.finance.model.repository.PersonRepository;
 import com.fernando.finance.service.LoanService;
-import com.fernando.finance.utils.DateMethods;
 import lombok.AllArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -33,9 +30,8 @@ public class LoanServiceImpl implements LoanService {
         loan.setDescription(loanRequestDto.getDescription());
         loan.setAmount(loanRequestDto.getAmount());
         loan.setStatus(loanRequestDto.getStatus() == 0 ? StatusType.PENDING : StatusType.COMPLETED);
-        loan.setCreatedAt(DateMethods.getActualDate());
-        loan.setUpdatedAt(DateMethods.getActualDate());
-        System.out.println(loanRequestDto.getIdPerson());
+//        loan.setCreatedAt(DateMethods.getActualDate());
+//        loan.setUpdatedAt(DateMethods.getActualDate());
         loan.setPerson(
                 personRepository.findById(loanRequestDto.getIdPerson())
                         .orElseThrow(() -> new RuntimeException("Error at get person to save loan")));
@@ -49,11 +45,16 @@ public class LoanServiceImpl implements LoanService {
         Loan loan = loanRepository.findById(id).orElseThrow(() -> new RuntimeException("The loan with the id " + id + " does not founded"));
         loan.setDescription(loanRequestDto.getDescription());
         loan.setAmount(loanRequestDto.getAmount());
-        loan.setUpdatedAt(DateMethods.getActualDate());
+//        loan.setUpdatedAt(DateMethods.getActualDate());
         loan.setStatus(loanRequestDto.getStatus() == 0 ? StatusType.PENDING : StatusType.COMPLETED);
 
         loan = loanRepository.save(loan);
         return mapToDto(loan);
+    }
+
+    @Override
+    public LoanResponseDto findOne(Integer id) {
+        return mapToDto(loanRepository.findById(id).orElseThrow(() -> new RuntimeException("The loan with the id " + id + " does not founded")));
     }
 
     private LoanResponseDto mapToDto(Loan loan) {
@@ -61,9 +62,10 @@ public class LoanServiceImpl implements LoanService {
         loanResponseDto.setId(loan.getId());
         loanResponseDto.setDescription(loan.getDescription());
         loanResponseDto.setAmount(loan.getAmount());
-        loanResponseDto.setStatus(StatusType.COMPLETED.equals(loan.getStatus()));
+        loanResponseDto.setStatus(loan.getStatus());
         loanResponseDto.setCreatedAt(loan.getCreatedAt());
         loanResponseDto.setUpdatedAt(loan.getUpdatedAt());
+        loanResponseDto.setName(loan.getPerson().getName());
 
         return loanResponseDto;
     }

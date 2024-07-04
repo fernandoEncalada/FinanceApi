@@ -14,5 +14,6 @@ public class LoanResponseDto {
     private double amount;
     private Date createdAt;
     private Date updatedAt;
-    private Boolean status;
+    private StatusType status;
+    private String name;
 }

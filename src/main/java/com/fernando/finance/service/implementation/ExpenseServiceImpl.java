@@ -5,7 +5,6 @@ import com.fernando.finance.model.dto.expense.ExpenseRequestDto;
 import com.fernando.finance.model.dto.expense.ExpenseResponseDto;
 import com.fernando.finance.model.repository.ExpenseRepository;
 import com.fernando.finance.service.ExpenseService;
-import com.fernando.finance.utils.DateMethods;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +37,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense =  new Expense();
         expense.setDescription(expenseRequestDto.getDescription());
         expense.setAmount(expenseRequestDto.getAmount());
-        expense.setCreatedAt(DateMethods.getActualDate());
-        expense.setUpdatedAt(DateMethods.getActualDate());
+//        expense.setCreatedAt(DateMethods.getActualDate());
+//        expense.setUpdatedAt(DateMethods.getActualDate());
         expense = expenseRepository.save(expense);
         return mapToDto(expense);
     }
@@ -49,7 +48,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense expense = expenseRepository.findById(id).orElseThrow(() -> new RuntimeException("The expense with id: " + id + " does not exist"));
         expense.setDescription(expenseRequestDto.getDescription());
         expense.setAmount(expenseRequestDto.getAmount());
-        expense.setUpdatedAt(DateMethods.getActualDate());
+//        expense.setUpdatedAt(DateMethods.getActualDate());
         expense = expenseRepository.save(expense);
         return mapToDto(expense);
     }

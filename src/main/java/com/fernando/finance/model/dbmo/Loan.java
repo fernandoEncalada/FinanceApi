@@ -10,6 +10,7 @@ import java.sql.Date;
 @Entity
 @Data
 public class Loan {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,8 +31,8 @@ public class Loan {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Basic
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusType status;
 
     @ManyToOne

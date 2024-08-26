@@ -1,15 +1,21 @@
 package com.fernando.finance.model.dbmo;
 
-import com.fernando.finance.model.StatusType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "expense")
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Expense {
 
     @Id
@@ -25,13 +31,28 @@ public class Expense {
     private double amount;
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
     @Basic
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "expense")
-    private List<Category> categories;
+
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "budget_id")
+    private Budget budget;
+
+    @PrePersist
+    private void onCreate() {
+        createdAt = new java.util.Date();
+        updatedAt = new java.util.Date();
+    }
 }

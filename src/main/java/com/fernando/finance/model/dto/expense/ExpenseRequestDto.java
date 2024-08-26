@@ -7,5 +7,7 @@ import java.sql.Date;
 @Data
 public class ExpenseRequestDto {
     private String description;
-    private double amount;
+    private Double amount;
+    private Long budgetId;
+    private Integer categoryId;
 }

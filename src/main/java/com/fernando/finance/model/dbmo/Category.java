@@ -1,11 +1,16 @@
 package com.fernando.finance.model.dbmo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "category")
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -16,7 +21,7 @@ public class Category {
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Expense expense;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "category", cascade = CascadeType.ALL)
+//    private Expense expense;
 }

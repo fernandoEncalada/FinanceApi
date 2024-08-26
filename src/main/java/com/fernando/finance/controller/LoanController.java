@@ -16,16 +16,13 @@ import java.util.List;
 public class LoanController {
 
     private final LoanService loanService;
-    private final DateMethods dateMethods;
 
-    public LoanController(LoanService loanService, DateMethods dateMethods) {
+    public LoanController(LoanService loanService) {
         this.loanService = loanService;
-        this.dateMethods = dateMethods;
     }
 
     @GetMapping
     private ResponseEntity<List<LoanResponseDto>> get() {
-        dateMethods.testMethod();
         return new ResponseEntity<>(loanService.get(), HttpStatus.OK);
     }
 
